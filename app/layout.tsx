@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sebby Commerce",
+  title: "Sebby Co. Commerce OS",
   description: "Ecommerce storefront and internal operations console."
 };
 

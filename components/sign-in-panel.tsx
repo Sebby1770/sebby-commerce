@@ -63,7 +63,7 @@ export function SignInPanel() {
           <div className="auth-icon">
             <KeyRound size={24} />
           </div>
-          <h1>Sign in to Sebby Commerce</h1>
+          <h1>Sign in to Sebby Co.</h1>
           <p>
             User accounts are powered by Supabase Auth. Staff permissions are
             resolved from the protected profile role attached to each user.

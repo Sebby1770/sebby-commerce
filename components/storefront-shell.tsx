@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ComponentType } from "react";
-import Link from "next/link";
 import clsx from "clsx";
 import {
   AlertTriangle,
@@ -19,12 +18,12 @@ import {
   RefreshCw,
   Search,
   ShieldCheck,
-  ShoppingBag,
   Trash2,
   Truck,
   UserCog,
   Users
 } from "lucide-react";
+import { AppSidebar } from "@/components/app-sidebar";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import {
   roleDescriptions,
@@ -48,14 +47,6 @@ type StorefrontShellProps = {
   initialTeam: TeamMember[];
 };
 
-const demoRoles: Role[] = [
-  "customer",
-  "support",
-  "inventory_manager",
-  "operations_manager",
-  "admin"
-];
-
 const adminTabs: Array<{
   id: AdminTab;
   label: string;
@@ -67,13 +58,21 @@ const adminTabs: Array<{
   { id: "team", label: "Team", icon: Users }
 ];
 
+const roleOptions: Role[] = [
+  "customer",
+  "support",
+  "inventory_manager",
+  "operations_manager",
+  "admin"
+];
+
 export function StorefrontShell({
   defaultView = "store",
   initialProducts,
   initialOrders,
   initialTeam
 }: StorefrontShellProps) {
-  const [view, setView] = useState<View>(defaultView);
+  const view = defaultView;
   const [adminTab, setAdminTab] = useState<AdminTab>("overview");
   const [role, setRole] = useState<Role>(
     defaultView === "admin" ? "admin" : "customer"
@@ -305,57 +304,7 @@ export function StorefrontShell({
 
   return (
     <main className="app-shell">
-      <aside className="sidebar" aria-label="Primary navigation">
-        <div className="brand-lockup">
-          <div className="brand-mark">SC</div>
-          <div>
-            <strong>Sebby Commerce</strong>
-            <span>Storefront and operations</span>
-          </div>
-        </div>
-
-        <nav className="nav-stack">
-          <button
-            className={clsx("nav-item", view === "store" && "active")}
-            onClick={() => setView("store")}
-            type="button"
-          >
-            <ShoppingBag size={18} />
-            Storefront
-          </button>
-          <button
-            className={clsx("nav-item", view === "admin" && "active")}
-            onClick={() => setView("admin")}
-            type="button"
-          >
-            <LayoutDashboard size={18} />
-            Internal tools
-          </button>
-          <Link className="nav-item" href="/signin">
-            <ShieldCheck size={18} />
-            User sign in
-          </Link>
-        </nav>
-
-        <div className="permission-card">
-          <div className="permission-title">
-            <Lock size={16} />
-            Current role
-          </div>
-          <select
-            aria-label="Demo role"
-            value={role}
-            onChange={(event) => setRole(event.target.value as Role)}
-          >
-            {demoRoles.map((item) => (
-              <option key={item} value={item}>
-                {roleLabels[item]}
-              </option>
-            ))}
-          </select>
-          <p>{roleDescriptions[role]}</p>
-        </div>
-      </aside>
+      <AppSidebar role={role} onRoleChange={setRole} />
 
       <section className="workspace">
         <header className="topbar">
@@ -365,6 +314,7 @@ export function StorefrontShell({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search products, categories, or orders"
+              suppressHydrationWarning
             />
           </div>
 
@@ -672,7 +622,7 @@ function AdminContent({
                   updateTeamRole(member, event.target.value as Role)
                 }
               >
-                {demoRoles.map((item) => (
+                {roleOptions.map((item) => (
                   <option key={item} value={item}>
                     {roleLabels[item]}
                   </option>
@@ -688,6 +638,14 @@ function AdminContent({
 
   return (
     <section className="panel-stack">
+      <div className="section-title-row">
+        <div>
+          <p className="overline">Dashboard</p>
+          <h1>Operations dashboard</h1>
+        </div>
+        <span>{roleLabels[role]}</span>
+      </div>
+
       <div className="metric-grid">
         <MetricCard
           icon={BarChart3}

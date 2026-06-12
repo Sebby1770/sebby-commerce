@@ -57,7 +57,7 @@ a {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -65,24 +65,25 @@ a {
   position: sticky;
   top: 0;
   height: 100vh;
-  padding: 24px;
+  padding: 14px;
   border-right: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 12px;
+  overflow: hidden;
 }
 
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   display: grid;
   place-items: center;
@@ -94,6 +95,15 @@ a {
 .brand-lockup strong,
 .brand-lockup span {
   display: block;
+}
+
+.brand-lockup strong {
+  font-size: 15px;
+  line-height: 1.05;
+}
+
+.brand-lockup span {
+  font-size: 12px;
 }
 
 .brand-lockup span,
@@ -110,7 +120,25 @@ a {
 
 .nav-stack {
   display: grid;
-  gap: 8px;
+  align-content: start;
+  gap: 9px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.nav-group {
+  display: grid;
+  gap: 2px;
+}
+
+.nav-group-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  padding: 0 8px 1px;
+  text-transform: uppercase;
 }
 
 .nav-item,
@@ -134,10 +162,11 @@ a {
 .nav-item {
   width: 100%;
   justify-content: flex-start;
-  padding: 11px 12px;
+  min-height: 29px;
+  padding: 6px 10px;
   color: var(--slate);
   background: transparent;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .nav-item:hover,
@@ -162,8 +191,14 @@ a {
 }
 
 .permission-card {
-  margin-top: auto;
-  padding: 14px;
+  padding: 10px;
+  flex: 0 0 auto;
+}
+
+.permission-card p {
+  font-size: 12.5px;
+  line-height: 1.25;
+  margin-bottom: 0;
 }
 
 .permission-title,
@@ -188,8 +223,8 @@ a {
 
 .permission-card select,
 .team-card select {
-  margin: 12px 0;
-  padding: 10px 12px;
+  margin: 8px 0;
+  padding: 8px 10px;
 }
 
 .workspace {
@@ -287,6 +322,13 @@ a {
   margin: 0;
   font-size: 28px;
   line-height: 1.12;
+}
+
+.page-description {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 8px 0 0;
+  max-width: 720px;
 }
 
 .section-title-row span {
@@ -511,6 +553,77 @@ a {
   font-size: 26px;
 }
 
+.metric-card.compact {
+  min-height: 118px;
+}
+
+.metric-card.compact strong {
+  font-size: 24px;
+}
+
+.business-page {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.business-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.business-list,
+.workflow-list {
+  display: grid;
+}
+
+.business-row,
+.workflow-item {
+  border-top: 1px solid var(--border);
+  padding: 14px;
+}
+
+.business-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.business-row strong,
+.business-row span,
+.workflow-item strong,
+.workflow-item span {
+  display: block;
+}
+
+.business-row span,
+.workflow-item span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.row-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.workflow-list {
+  gap: 0;
+}
+
+.workflow-item {
+  display: grid;
+  gap: 6px;
+}
+
 .two-column {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -703,7 +816,8 @@ th {
   }
 
   .store-grid,
-  .two-column {
+  .two-column,
+  .business-grid {
     grid-template-columns: 1fr;
   }
 
@@ -720,6 +834,11 @@ th {
   .sidebar {
     position: static;
     height: auto;
+    overflow: visible;
+  }
+
+  .nav-stack {
+    overflow: visible;
   }
 
   .topbar,
@@ -738,6 +857,13 @@ th {
 
   .workspace {
     padding: 14px;
+  }
+
+  .business-row,
+  .row-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: left;
   }
 
   th,
