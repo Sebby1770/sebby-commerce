@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { demoStore } from "@/lib/data";
 import { getAuthContext, isAuthResponse, requireRole } from "@/lib/auth";
+import { applyRateLimit } from "@/lib/api/rate-limit";
 import { jsonError, parseBody } from "@/lib/api/response";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import type { OrderStatus } from "@/lib/types";
@@ -12,6 +13,15 @@ const statusSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "orders:read",
+    limit: 80,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await getAuthContext(request);
   if (!auth) {
     return jsonError("Authentication required.", 401);
@@ -54,6 +64,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "orders:write",
+    limit: 40,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await requireRole(request, [
     "support",
     "operations_manager",

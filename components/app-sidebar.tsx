@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
 import clsx from "clsx";
 import {
   Activity,
@@ -12,6 +13,7 @@ import {
   CreditCard,
   Headphones,
   Home,
+  Layers3,
   LayoutDashboard,
   Megaphone,
   ReceiptText,
@@ -64,6 +66,7 @@ const navGroups: Array<{
       { href: "/fulfillment", label: "Fulfillment", icon: Truck },
       { href: "/returns", label: "Returns", icon: RotateCcw },
       { href: "/marketing", label: "Marketing", icon: Megaphone },
+      { href: "/platform", label: "Platform stack", icon: Layers3 },
       { href: "/apps", label: "Apps", icon: AppWindow }
     ]
   },
@@ -99,10 +102,10 @@ export function AppSidebar({ role, onRoleChange }: AppSidebarProps) {
   return (
     <aside className="sidebar" aria-label="Primary navigation">
       <div className="brand-lockup">
-        <div className="brand-mark">S</div>
+        <div className="brand-mark">N</div>
         <div>
-          <strong>Sebby Co.</strong>
-          <span>Commerce OS</span>
+          <strong>NexaCart</strong>
+          <span>Commerce Cloud</span>
         </div>
       </div>
 
@@ -119,7 +122,7 @@ export function AppSidebar({ role, onRoleChange }: AppSidebarProps) {
                     "nav-item",
                     isActive(pathname, item.href) && "active"
                   )}
-                  href={item.href}
+                  href={item.href as Route}
                   key={item.href}
                 >
                   <Icon size={17} />

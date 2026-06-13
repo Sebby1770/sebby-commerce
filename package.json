@@ -1,5 +1,5 @@
 {
-  "name": "sebby-commerce",
+  "name": "nexacart-commerce",
   "version": "0.1.0",
   "private": true,
   "description": "A Supabase-backed ecommerce storefront with API routes, internal tools, user accounts, and role-based permissions.",

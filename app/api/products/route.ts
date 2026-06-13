@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { demoStore, createId } from "@/lib/data";
 import { isAuthResponse, requireRole } from "@/lib/auth";
+import { applyRateLimit } from "@/lib/api/rate-limit";
 import { jsonError, parseBody } from "@/lib/api/response";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
@@ -17,6 +18,15 @@ const productSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "products:read",
+    limit: 120,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const admin = getSupabaseAdmin();
   const wantsAdmin = request.nextUrl.searchParams.get("admin") === "true";
 
@@ -61,6 +71,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "products:write",
+    limit: 30,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await requireRole(request, [
     "inventory_manager",
     "operations_manager",

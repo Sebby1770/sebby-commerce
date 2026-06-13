@@ -1,6 +1,6 @@
-# Sebby Commerce
+# NexaCart Commerce Cloud
 
-Sebby Commerce is a Next.js ecommerce MVP with a customer storefront, checkout
+NexaCart is a Next.js ecommerce MVP with a customer storefront, checkout
 API, internal operations tools, Supabase Auth, and role-based permissions.
 
 ## Features
@@ -10,6 +10,9 @@ API, internal operations tools, Supabase Auth, and role-based permissions.
 - Internal dashboard for revenue, fulfillment, low-stock alerts, inventory, and staff roles
 - Supabase SQL migration with tables, RLS policies, grants, profile triggers, and seed products
 - Local demo mode so the app runs before Supabase credentials are connected
+- Interactive platform stack page covering system design, architecture, frontend,
+  APIs, data, auth, hosting, CI/CD, security, rate limiting, CDN readiness,
+  logs, monitoring, testing, scaling, and future extensions
 
 ## Run Locally
 

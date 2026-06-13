@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sebby Co. Commerce OS",
+  title: "NexaCart Commerce Cloud",
   description: "Ecommerce storefront and internal operations console."
 };
 

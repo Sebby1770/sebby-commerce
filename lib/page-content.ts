@@ -638,8 +638,8 @@ export const pages = {
     ],
     rows: [
       {
-        primary: "Sebby Forbes",
-        secondary: "sebby@example.com",
+        primary: "NexaCart Admin",
+        secondary: "admin@nexacart.local",
         meta: "Admin",
         status: "Active",
         tone: "fulfilled"
@@ -747,7 +747,7 @@ export const pages = {
     rows: [
       {
         primary: "Store identity",
-        secondary: "Sebby Co. Commerce OS",
+        secondary: "NexaCart Commerce Cloud",
         meta: "Brand",
         status: "Current",
         tone: "fulfilled"

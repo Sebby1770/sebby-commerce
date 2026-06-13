@@ -1,4 +1,4 @@
-# Sebby Commerce API
+# NexaCart Commerce Cloud API
 
 All API routes return JSON. In local demo mode, pass `x-demo-role` with one of:
 `customer`, `support`, `inventory_manager`, `operations_manager`, or `admin`.

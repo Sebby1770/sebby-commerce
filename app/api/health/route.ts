@@ -4,7 +4,7 @@ import { isDemoAuthEnabled } from "@/lib/auth";
 export function GET() {
   return Response.json({
     ok: true,
-    service: "sebby-commerce",
+    service: "nexacart-commerce",
     supabaseConfigured: hasSupabaseServerConfig(),
     demoAuthEnabled: isDemoAuthEnabled()
   });

@@ -144,8 +144,8 @@ export const seedOrders: Order[] = [
 export const seedTeam: TeamMember[] = [
   {
     id: "usr_admin",
-    email: "sebby@example.com",
-    full_name: "Sebby Forbes",
+    email: "admin@nexacart.local",
+    full_name: "NexaCart Admin",
     role: "admin",
     status: "active",
     created_at: "2026-06-01T09:00:00.000Z"

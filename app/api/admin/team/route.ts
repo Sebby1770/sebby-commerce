@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { createId, demoStore } from "@/lib/data";
 import { isAuthResponse, requireRole } from "@/lib/auth";
+import { applyRateLimit } from "@/lib/api/rate-limit";
 import { jsonError, parseBody } from "@/lib/api/response";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
@@ -28,6 +29,15 @@ const updateRoleSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "team:read",
+    limit: 40,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await requireRole(request, ["admin"]);
   if (isAuthResponse(auth)) {
     return auth;
@@ -52,6 +62,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "team:write",
+    limit: 20,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await requireRole(request, ["admin"]);
   if (isAuthResponse(auth)) {
     return auth;
@@ -113,6 +132,15 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "team:write",
+    limit: 20,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const auth = await requireRole(request, ["admin"]);
   if (isAuthResponse(auth)) {
     return auth;

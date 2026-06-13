@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { createId, demoStore } from "@/lib/data";
 import { getAuthContext } from "@/lib/auth";
+import { applyRateLimit } from "@/lib/api/rate-limit";
 import { jsonError, parseBody } from "@/lib/api/response";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
@@ -20,6 +21,15 @@ const checkoutSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const rateLimit = applyRateLimit(request, {
+    scope: "checkout:create",
+    limit: 20,
+    windowMs: 60_000
+  });
+  if (rateLimit) {
+    return rateLimit;
+  }
+
   const body = await parseBody(request, checkoutSchema);
   if (body instanceof Response) {
     return body;

@@ -1,6 +1,6 @@
 # Role-Based Access Control
 
-Sebby Commerce uses Supabase Auth for accounts and `public.profiles.role` for
+NexaCart uses Supabase Auth for accounts and `public.profiles.role` for
 business permissions. Authorization is enforced in two places:
 
 1. Next.js API route handlers verify the requester role before writes.
