@@ -1,11 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import type { Route } from "next";
 import clsx from "clsx";
 import {
+  ArrowUpRight,
   CheckCircle2,
+  FileText,
   Gauge,
   Layers3,
+  ListChecks,
   RefreshCw,
   Search,
   ShieldCheck,
@@ -32,6 +37,7 @@ export function PlatformStackPage() {
       platformLayers[0],
     [selectedLayerId]
   );
+  const selectedHrefIsExternal = selectedLayer.actionHref.startsWith("http");
 
   return (
     <main className="app-shell">
@@ -65,19 +71,19 @@ export function PlatformStackPage() {
 
         <div className="notice-line" role="status">
           <CheckCircle2 size={17} />
-          Every layer from the stack map is represented as a working NexaCart
-          operating surface.
+          Every platform capability is mapped to a working NexaCart surface,
+          API guard, documentation path, or production workflow.
         </div>
 
         <section className="platform-page">
           <div className="section-title-row platform-title-row">
             <div>
               <p className="overline">Platform stack</p>
-              <h1>NexaCart operating stack</h1>
+              <h1>NexaCart implementation center</h1>
               <p className="page-description">
-                A cleaner, clickable version of the full ecommerce foundation:
-                product design, architecture, frontend, APIs, data, auth,
-                hosting, delivery, security, reliability, testing, and scale.
+                The ecommerce foundation is implemented as product workflows,
+                route handlers, database-ready storage, permissions, release
+                checks, observability signals, and scale-ready operations.
               </p>
             </div>
             <button
@@ -103,26 +109,36 @@ export function PlatformStackPage() {
           </div>
 
           <div className="platform-grid">
-            <section className="table-card platform-stack-card">
+            <section className="table-card platform-layer-card">
               <div className="section-heading">
                 <Layers3 size={18} />
-                Reference stack
+                Implemented capabilities
               </div>
 
-              <div className="stack-visual" aria-label="NexaCart platform stack">
+              <div
+                className="platform-layer-list"
+                aria-label="NexaCart platform capabilities"
+              >
                 {platformLayers.map((layer) => (
                   <button
                     aria-pressed={selectedLayer.id === layer.id}
                     className={clsx(
-                      "stack-layer",
-                      `stack-${layer.color}`,
+                      "platform-layer-button",
                       selectedLayer.id === layer.id && "active"
                     )}
                     key={layer.id}
                     onClick={() => setSelectedLayerId(layer.id)}
                     type="button"
                   >
-                    <span>{layer.label}</span>
+                    <span className="platform-layer-main">
+                      <strong>{layer.label}</strong>
+                      <small>{layer.metric}</small>
+                    </span>
+                    <span
+                      className={clsx("status-pill", statusTone[layer.status])}
+                    >
+                      {layer.status}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -169,18 +185,52 @@ export function PlatformStackPage() {
                   </li>
                 ))}
               </ul>
+
+              <div className="section-heading">
+                <FileText size={18} />
+                Proof in the app
+              </div>
+              <ul className="evidence-list">
+                {selectedLayer.evidence.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+
+              {selectedHrefIsExternal ? (
+                <a
+                  className="button secondary platform-action-link"
+                  href={selectedLayer.actionHref}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <ArrowUpRight size={16} />
+                  {selectedLayer.actionLabel}
+                </a>
+              ) : (
+                <Link
+                  className="button secondary platform-action-link"
+                  href={selectedLayer.actionHref as Route}
+                >
+                  <ArrowUpRight size={16} />
+                  {selectedLayer.actionLabel}
+                </Link>
+              )}
             </aside>
           </div>
 
           <section className="table-card platform-matrix">
-            <div className="section-heading">Layer ownership matrix</div>
+            <div className="section-heading">
+              <ListChecks size={18} />
+              Capability implementation map
+            </div>
             <table>
               <thead>
                 <tr>
-                  <th>Layer</th>
+                  <th>Capability</th>
                   <th>Owner</th>
                   <th>Status</th>
                   <th>Signal</th>
+                  <th>Surface</th>
                 </tr>
               </thead>
               <tbody>
@@ -196,11 +246,15 @@ export function PlatformStackPage() {
                       </span>
                     </td>
                     <td>{layer.metric}</td>
+                    <td>{layer.actionLabel}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="platform-mobile-matrix" aria-label="Layer ownership">
+            <div
+              className="platform-mobile-matrix"
+              aria-label="Capability implementation map"
+            >
               {platformLayers.map((layer) => (
                 <article className="platform-mobile-row" key={layer.id}>
                   <div className="platform-mobile-row-head">
@@ -220,6 +274,10 @@ export function PlatformStackPage() {
                       <small>Signal</small>
                       {layer.metric}
                     </span>
+                  </div>
+                  <div className="platform-mobile-surface">
+                    <small>Surface</small>
+                    {layer.actionLabel}
                   </div>
                 </article>
               ))}
